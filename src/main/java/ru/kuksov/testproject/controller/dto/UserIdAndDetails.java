@@ -6,6 +6,14 @@ import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 import org.hibernate.validator.constraints.UUID;
 
+/**
+ * Класс DTO для выходных данных о пользователе
+ * @param uuid уникальный номер пользователя
+ * @param fio ФИО
+ * @param phoneNumber телефонный номер (фильтр для России)
+ * @param avatar url-ссылка на аватарку
+ * @param roleName название роли
+ */
 public record UserIdAndDetails(
 
         @NotBlank(message = "Идентификатор UUID обязателен")

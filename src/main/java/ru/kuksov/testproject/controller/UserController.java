@@ -21,6 +21,9 @@ import ru.kuksov.testproject.service.UserService;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Контроллер для обработки запросов с общим путем '/api'
+ */
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -28,12 +31,22 @@ public class UserController {
 
     private final UserService userService;
 
+    /**
+     * Обработка создания пользователя
+     * @param request полученные данные в виде JSON
+     * @return данные пользователя
+     */
     @PostMapping("/createNewUser")
     public ResponseEntity<UserIdAndDetails> createUser(@RequestBody @Valid UserDetails request) {
         User user = userService.createUser(request);
         return convertUserToResponseEntity(user);
     }
 
+    /**
+     * Обработка запроса на получение данных пользователя
+     * @param userUUID уникальный номер пользователя
+     * @return данные пользователя
+     */
     @GetMapping("/users")
     public ResponseEntity<UserIdAndDetails> getUser(
             @RequestParam(name = "userID") UUID userUUID
@@ -44,6 +57,11 @@ public class UserController {
                 .build());
     }
 
+    /**
+     * Обработка запроса на изменение данных пользователя с передачей данных через JSON
+     * @param request новые данные пользователя
+     * @return данные пользователя после изменений
+     */
     @PutMapping(value = "/userDetailsUpdate", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserIdAndDetails> updateUserDetailsFromJson(
             @RequestBody @Valid UserIdAndDetails request
@@ -65,6 +83,15 @@ public class UserController {
         }
     }
 
+    /**
+     * Обработка запроса на изменение данных пользователя с передачей данных в параметрах запроса
+     * @param userUUID уникальный номер пользователя
+     * @param fio новые ФИО пользователя
+     * @param phoneNumber новый номер телефона
+     * @param avatar новая ссылка на аватарку
+     * @param roleName новое название роли
+     * @return данные пользователя после изменений
+     */
     @PutMapping(value = "/userDetailsUpdate")
     public ResponseEntity<UserIdAndDetails> updateUserDetailsFromParams(
             @RequestParam(name = "uuid") UUID userUUID,
@@ -86,6 +113,10 @@ public class UserController {
         }
     }
 
+    /**
+     * Удаление пользователя
+     * @param userUUID уникальный номер пользователя
+     */
     @DeleteMapping("/users")
     public void deleteUser(
             @RequestParam(name = "userID") UUID userUUID
@@ -93,6 +124,11 @@ public class UserController {
         userService.deleteUser(userUUID);
     }
 
+    /**
+     * Метод преобразует данные пользователя для передачи клиенту в ответ на запрос
+     * @param user данные пользователя
+     * @return данные в необходимом формате
+     */
     private ResponseEntity<UserIdAndDetails> convertUserToResponseEntity(User user) {
         return ResponseEntity
                 .status(HttpStatus.OK)

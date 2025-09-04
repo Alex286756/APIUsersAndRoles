@@ -17,6 +17,9 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
+/**
+ * Данные таблицы "users" в БД
+ */
 @Entity
 @Builder
 @Getter

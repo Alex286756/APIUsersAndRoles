@@ -15,6 +15,9 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
+/**
+ * Данные таблицы "roles" в БД
+ */
 @Entity
 @Builder
 @Getter

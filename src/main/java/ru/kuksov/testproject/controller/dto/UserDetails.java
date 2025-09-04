@@ -5,6 +5,13 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
 
+/**
+ * Класс DTO для входных данных о пользователе
+ * @param fio ФИО
+ * @param phoneNumber телефонный номер (фильтр для России)
+ * @param avatar url-ссылка на аватарку
+ * @param roleName название роли
+ */
 public record UserDetails(
 
         @NotBlank(message = "Указание ФИО обязательно")

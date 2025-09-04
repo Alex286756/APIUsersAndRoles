@@ -8,6 +8,9 @@ import ru.kuksov.testproject.model.User;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Класс работы с БД (таблица пользователей)
+ */
 @Repository
 public interface UserRepository extends CrudRepository<User, UUID> {
 

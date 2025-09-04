@@ -10,6 +10,9 @@ import ru.kuksov.testproject.repository.UserRepository;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Бизнес-логика работы с данными пользователей
+ */
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -17,6 +20,11 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
 
+    /**
+     * Удаление данных пользователя. Если пользователей с такой же ролью больше нет,
+     * то также удаляется роль.
+     * @param userUUID уникальный номер пользователя
+     */
     public void deleteUser(UUID userUUID) {
         Optional<User> userOptional = userRepository.findById(userUUID);
         if (userOptional.isPresent()) {
@@ -30,10 +38,20 @@ public class UserService {
         }
     }
 
+    /**
+     * Поиск данных пользователя по уникальному номеру
+     * @param userUUID уникальный номер
+     * @return результат поиска пользователя
+     */
     public Optional<User> findUserByUUID(UUID userUUID) {
         return userRepository.findById(userUUID);
     }
 
+    /**
+     * Создание пользователя
+     * @param request данные пользователя
+     * @return данные пользователя после создания
+     */
     public User createUser(UserDetails request) {
         Role role = roleService.getOrCreateRole(request.roleName());
         return userRepository.save(
@@ -46,6 +64,15 @@ public class UserService {
         );
     }
 
+    /**
+     * Редактирует данные пользователя (если они не пустые)
+     * @param user пользователь, данные которого редактируются
+     * @param fio новые ФИО пользователя
+     * @param phoneNumber новый номер телефона
+     * @param avatar новая ссылка на аватарку
+     * @param roleName новая роль
+     * @return данные пользователя после редактирования
+     */
     public User editUser(User user,
                          String fio,
                          String phoneNumber,
