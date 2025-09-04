@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: test-project-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    show-sql: false
+    generate-ddl: true
+    hibernate.ddl-auto: update
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+server:
+  port: "${SERVER_PORT}"
